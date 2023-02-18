@@ -2,22 +2,17 @@ package ru.stqa.pft.sandbox;
 
 public class Point {
     // Координаты точки A(x, y) на координатной плоскости.
-    public int ax;
-    public int ay;
+    public int x;
+    public int y;
 
-    // Координаты точки B(x, y) на координатной плоскости.
-    public int bx;
-    public int by;
 
-    public Point(int ax, int ay, int bx, int by) {
-        this.ax = ax;
-        this.ay = ay;
-        this.bx = bx;
-        this.by = by;
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     // Расстояние между двумя точками нахожу по формуле: distance = √((xb - xa)^2 + (yb - ya)^2)
-    public double distance() {
-        return  Math.sqrt(Math.pow((bx - ax), 2) + Math.pow((by - ay), 2));
+    public double distance(Point p) {
+        return  Math.sqrt(Math.pow((this.x - p.x), 2) + Math.pow((this.y - p.y), 2));
     }
 }
