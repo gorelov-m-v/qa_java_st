@@ -4,24 +4,9 @@ import java.time.Duration;
 import org.testng.annotations.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-//import org.openqa.selenium.support.ui.Select;
-//import java.io.File;
-//import org.apache.commons.io.FileUtils;
-//import java.util.regex.Pattern;
-//import java.util.concurrent.TimeUnit;
 
 public class GroupCreationTests {
   private WebDriver wd;
-  private JavascriptExecutor js;
-
-  @BeforeMethod(alwaysRun = true)
-  public void setUp() throws Exception {
-    System.setProperty("webdriver.chrome.driver", "C:\\Users\\mgorelov\\Desktop\\chromedriver.exe");
-    wd = new ChromeDriver();
-    wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-    js = (JavascriptExecutor) wd;
-    login("admin", "secret");
-  }
 
   private void login(String username, String password) {
     wd.get("http://localhost/addressbook/group.php");
@@ -31,17 +16,6 @@ public class GroupCreationTests {
     wd.findElement(By.name("pass")).sendKeys(password);
     wd.findElement(By.xpath("//input[@value='Login']")).click();
   }
-
-  @Test
-  public void testGroupCreation() throws Exception {
-    goToGroupPage();
-    initGroupCreation();
-    fillGroupForm(new GroupData("test11", "test11", "test11"));
-    submitGroupCreation();
-    returnToGroupPage();
-//    wd.findElement(By.linkText("Logout")).click();
-  }
-
   private void returnToGroupPage() {
     wd.findElement(By.linkText("groups")).click();
   }
@@ -65,6 +39,23 @@ public class GroupCreationTests {
 
   private void goToGroupPage() {
     wd.findElement(By.linkText("groups")).click();
+  }
+
+  @BeforeMethod(alwaysRun = true)
+  public void setUp() throws Exception {
+    System.setProperty("webdriver.chrome.driver", "C:\\Users\\mgorelov\\Desktop\\chromedriver.exe");
+    wd = new ChromeDriver();
+    wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+    login("admin", "secret");
+  }
+
+  @Test
+  public void testGroupCreation() throws Exception {
+    goToGroupPage();
+    initGroupCreation();
+    fillGroupForm(new GroupData("test11", "test11", "test11"));
+    submitGroupCreation();
+    returnToGroupPage();
   }
 
   @AfterMethod(alwaysRun = true)
