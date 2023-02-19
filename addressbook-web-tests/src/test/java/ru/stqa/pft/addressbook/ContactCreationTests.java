@@ -53,7 +53,7 @@ public class ContactCreationTests {
   }
 
   @Test
-  public void testContactCreationTests() throws Exception {
+  public void testContactCreationTests(){
     initContactCreation();
     fillContactForm(new ContactData("Mikhail", "Junior", "Gorelov", "Junior", "89037776767", "testmail@testmail.com"));
     submitContactCreation();
