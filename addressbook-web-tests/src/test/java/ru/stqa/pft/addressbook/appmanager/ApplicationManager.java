@@ -14,7 +14,7 @@ public class ApplicationManager {
     private GroupHelper groupHelper;
 
     public void returnToHomePage() {
-      wd.findElement(By.linkText("home page")).click();
+        wd.findElement(By.linkText("home page")).click();
     }
 
     public void alertAccept() {
