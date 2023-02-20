@@ -4,14 +4,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeDriver;
-import ru.stqa.pft.addressbook.model.ContactData;
 
 import java.time.Duration;
 
-import static sun.security.jgss.GSSUtil.login;
-
 public class ApplicationManager {
+
     public ChromeDriver wd;
+    private ContactHelper contactHelper;
     private SessionHelper sessionHelper;
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
@@ -20,36 +19,15 @@ public class ApplicationManager {
       wd.findElement(By.linkText("home page")).click();
     }
 
-    public void submitContactCreation() {
-      wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
-    }
-
-    public void fillContactForm(ContactData contactData) {
-      wd.findElement(By.name("firstname")).clear();
-      wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstName());
-      wd.findElement(By.name("middlename")).clear();
-      wd.findElement(By.name("middlename")).sendKeys(contactData.getMiddleName());
-      wd.findElement(By.name("lastname")).clear();
-      wd.findElement(By.name("lastname")).sendKeys(contactData.getLastName());
-      wd.findElement(By.name("nickname")).clear();
-      wd.findElement(By.name("nickname")).sendKeys(contactData.getNickName());
-      wd.findElement(By.name("mobile")).clear();
-      wd.findElement(By.name("mobile")).sendKeys(contactData.getMobile());
-      wd.findElement(By.name("email")).clear();
-      wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
-    }
-
-    public void initContactCreation() {
-      wd.findElement(By.linkText("add new")).click();
-    }
-
     public void init() {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\mgorelov\\Desktop\\chromedriver.exe");
         wd = new ChromeDriver();
         wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         groupHelper = new GroupHelper(wd);
+        contactHelper = new ContactHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
+        wd.get("http://localhost/addressbook/group.php");
         sessionHelper.login("admin", "secret");
     }
 
@@ -81,5 +59,9 @@ public class ApplicationManager {
 
     public NavigationHelper getNavigationHelper() {
         return navigationHelper;
+    }
+
+    public ContactHelper getContactHelper() {
+        return contactHelper;
     }
 }
