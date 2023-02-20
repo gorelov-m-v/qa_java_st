@@ -17,6 +17,10 @@ public class ApplicationManager {
       wd.findElement(By.linkText("home page")).click();
     }
 
+    public void alertAccept() {
+        wd.switchTo().alert().accept();
+    }
+
     public void init() {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\mgorelov\\Desktop\\chromedriver.exe");
         wd = new ChromeDriver();
