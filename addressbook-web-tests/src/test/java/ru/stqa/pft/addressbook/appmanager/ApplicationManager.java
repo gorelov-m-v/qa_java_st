@@ -40,7 +40,7 @@ public class ApplicationManager {
             wd = new FirefoxDriver();
         }
         wd.get("http://localhost/addressbook/group.php");
-        wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         groupHelper = new GroupHelper(wd);
         contactHelper = new ContactHelper(wd);
         navigationHelper = new NavigationHelper(wd);
