@@ -4,9 +4,14 @@ mainClassName = "ru.stqa.pft.sandbox.MyFirstProgram"
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://repo.clojars.org'
+        name 'Clojars'
+    }
 }
 
 dependencies {
     implementation 'org.testng:testng:6.9.10'
+    implementation 'remote-repl:remote-repl:0.0.1-SNAPSHOT'
 
 }

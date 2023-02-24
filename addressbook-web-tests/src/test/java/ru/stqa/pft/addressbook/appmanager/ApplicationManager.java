@@ -1,17 +1,29 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.*;
+
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
 
-    public ChromeDriver wd;
+
+    WebDriver wd;
     private ContactHelper contactHelper;
     private SessionHelper sessionHelper;
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
+    private String browser;
+
+    public ApplicationManager(String browser) {
+        this.browser = browser;
+    }
 
     public void returnToHomePage() {
         wd.findElement(By.linkText("home page")).click();
@@ -22,14 +34,19 @@ public class ApplicationManager {
     }
 
     public void init() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\mgorelov\\Desktop\\chromedriver.exe");
-        wd = new ChromeDriver();
-        wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        if (browser == BrowserType.CHROME) {
+            wd = new ChromeDriver();
+        } else if (browser == BrowserType.FIREFOX) {
+            wd = new FirefoxDriver();
+        } else if (browser == BrowserType.IE) {
+            wd = new InternetExplorerDriver();
+        }
+        wd.get("http://localhost/addressbook/group.php");
+        wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         groupHelper = new GroupHelper(wd);
         contactHelper = new ContactHelper(wd);
         navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
-        wd.get("http://localhost/addressbook/group.php");
         sessionHelper.login("admin", "secret");
     }
 
