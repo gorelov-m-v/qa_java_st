@@ -13,7 +13,6 @@ public class ContactHelper extends HelperBase {
     public ContactHelper(WebDriver wd) {
         super(wd);
     }
-
     public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("middlename"), contactData.getMiddleName());
@@ -53,16 +52,16 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void createContact(ContactData contact, boolean creation) {
+    public void createContact(ContactData contact) {
         initContactCreation();
-        fillContactForm(contact, creation);
+        fillContactForm(contact, true);
         submitContactCreation();
         returnToHomePage();
     }
 
-    public void modifyContact(ContactData contact, boolean creation) {
+    public void modifyContact(ContactData contact) {
         initContactModification();
-        fillContactForm(contact, creation);
+        fillContactForm(contact, false);
         submitContactModification();
         returnToHomePage();
     }

@@ -29,20 +29,20 @@ public class ApplicationManager {
         wd.switchTo().alert().accept();
     }
 
-    public void init() {
-        if (browser.equals(BrowserType.CHROME)) {
-            wd = new ChromeDriver();
-        } else if (browser.equals(BrowserType.FIREFOX)) {
-            wd = new FirefoxDriver();
+        public void init() {
+            if (browser.equals(BrowserType.CHROME)) {
+                wd = new ChromeDriver();
+            } else if (browser.equals(BrowserType.FIREFOX)) {
+                wd = new FirefoxDriver();
+            }
+            wd.get("http://localhost/addressbook/group.php");
+            wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+            groupHelper = new GroupHelper(wd);
+            contactHelper = new ContactHelper(wd);
+            navigationHelper = new NavigationHelper(wd);
+            sessionHelper = new SessionHelper(wd);
+            sessionHelper.login("admin", "secret");
         }
-        wd.get("http://localhost/addressbook/group.php");
-        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        groupHelper = new GroupHelper(wd);
-        contactHelper = new ContactHelper(wd);
-        navigationHelper = new NavigationHelper(wd);
-        sessionHelper = new SessionHelper(wd);
-        sessionHelper.login("admin", "secret");
-    }
 
     public void stop() {
         wd.quit();
