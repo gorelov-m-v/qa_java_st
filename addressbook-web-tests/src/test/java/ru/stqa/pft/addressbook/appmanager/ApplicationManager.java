@@ -25,10 +25,6 @@ public class ApplicationManager {
         this.browser = browser;
     }
 
-    public void returnToHomePage() {
-        wd.findElement(By.linkText("home page")).click();
-    }
-
     public void alertAccept() {
         wd.switchTo().alert().accept();
     }

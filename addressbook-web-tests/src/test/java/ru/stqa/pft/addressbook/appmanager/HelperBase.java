@@ -17,6 +17,10 @@ public class HelperBase {
         wd.findElement(locator).click();
     }
 
+    public void returnToHomePage() {
+        wd.findElement(By.linkText("home page")).click();
+    }
+
     protected void type(By locator, String text) {
         click(locator);
         if (text != null) {
