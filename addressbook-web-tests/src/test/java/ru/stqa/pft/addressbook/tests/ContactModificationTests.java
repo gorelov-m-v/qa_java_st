@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import java.util.List;
 
 public class ContactModificationTests extends TestBase {
 
@@ -16,13 +17,12 @@ public class ContactModificationTests extends TestBase {
                                                              "89037776767", "testmail@testmail.com",
                                                              "[none]"));
         }
-        int before = app.getContactHelper().getContactCount();
+        List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().modifyContact(new ContactData("Mikhail2", "Junior2",
                                                              "Gorelov2", "Junior2",
                                                              "890377767672", "testmail2@testmail.com",
-                                                             "[none]"), before - 1);
-        int after = app.getContactHelper().getContactCount();
-        Assert.assertEquals(after, before);
-
+                                                             "[none]"), before.size() - 1);
+        List<ContactData> after = app.getContactHelper().getContactList();
+        Assert.assertEquals(after.size(), before.size());
     }
 }
