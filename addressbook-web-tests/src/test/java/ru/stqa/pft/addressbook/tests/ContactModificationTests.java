@@ -4,8 +4,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class ContactModificationTests extends TestBase {
 
@@ -18,6 +17,7 @@ public class ContactModificationTests extends TestBase {
                                                              "89037776767", "testmail@testmail.com",
                                                              "[none]"));
         }
+
         List<ContactData> before = app.getContactHelper().getContactList();
         ContactData contact = new ContactData(before.get(before.size() - 1).getId() ,"Mikhail2", "Junior2",
                                               "Gorelov2", "Junior2",
@@ -29,6 +29,9 @@ public class ContactModificationTests extends TestBase {
 
         before.remove(before.size() - 1);
         before.add(contact);
-        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+        Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+        before.sort(byId);
+        after.sort(byId);
+        Assert.assertEquals(before, after);
     }
 }
