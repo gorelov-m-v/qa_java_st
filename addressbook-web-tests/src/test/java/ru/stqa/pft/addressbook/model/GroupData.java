@@ -25,19 +25,15 @@ public class GroupData {
     public String getName() {
         return name;
     }
-
     public String getHeader() {
         return header;
     }
-
     public String getFooter() {
         return footer;
     }
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
