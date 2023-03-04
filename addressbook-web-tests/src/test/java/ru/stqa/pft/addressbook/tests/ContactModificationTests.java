@@ -22,7 +22,7 @@ public class ContactModificationTests extends TestBase {
                                                              "890377767672", "testmail2@testmail.com",
                                                              "[none]"), before - 1);
         int after = app.getContactHelper().getContactCount();
-        Assert.assertEquals(before, after);
+        Assert.assertEquals(after, before);
 
     }
 }

@@ -9,6 +9,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContactHelper extends HelperBase {
 
     public ContactHelper(WebDriver wd) {
@@ -73,5 +76,19 @@ public class ContactHelper extends HelperBase {
 
     public void waitingDeleteButton() {
         (new WebDriverWait(wd, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@value='Delete']")));
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        List<WebElement> elements = wd.findElements(By.xpath(".//tr[@name='entry']"));
+        for(WebElement element : elements) {
+            String lastName = element.findElement(By.xpath(".//td[2]")).getText();
+            String firstName = element.findElement(By.xpath(".//td[3]")).getText();
+            System.out.print(lastName);
+            System.out.println(firstName);
+            ContactData contact = new ContactData(firstName, null, lastName, null, null, null, null);
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }

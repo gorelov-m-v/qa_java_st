@@ -23,6 +23,6 @@ public class ContactDeletionTests extends TestBase {
         app.alertAccept();
         app.getContactHelper().waitingDeleteButton();
         int after = app.getContactHelper().getContactCount();
-        Assert.assertEquals(before, after + 1);
+        Assert.assertEquals(after, before - 1);
     }
 }
