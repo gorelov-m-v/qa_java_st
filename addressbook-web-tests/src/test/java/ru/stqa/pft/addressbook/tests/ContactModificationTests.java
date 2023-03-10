@@ -10,7 +10,7 @@ public class ContactModificationTests extends TestBase {
 
     @Test(enabled = false)
     public void testsContactModification() {
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().goToHomePage();
         if (! app.getContactHelper().isElementPresent(By.name("selected[]"))) {
         app.getContactHelper().createContact(new ContactData("Mikhail", "Junior",
                                                              "Gorelov", "Junior",

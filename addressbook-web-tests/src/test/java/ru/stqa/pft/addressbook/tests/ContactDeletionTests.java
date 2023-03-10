@@ -11,7 +11,7 @@ public class ContactDeletionTests extends TestBase {
     @Test(enabled = false)
     public void testsContactDeletion() {
 
-        app.getNavigationHelper().goToHomePage();
+        app.goTo().goToHomePage();
         if (! app.getContactHelper().isElementPresent(By.name("selected[]"))) {
             app.getContactHelper().createContact(new ContactData("Mikhail", "Junior",
                                                                  "Gorelov", "Junior",
