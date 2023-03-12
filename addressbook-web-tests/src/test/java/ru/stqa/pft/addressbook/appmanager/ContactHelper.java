@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -58,7 +59,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         initContactCreation();
         fillContactForm(contact, true);
         submitContactCreation();
@@ -87,7 +88,7 @@ public class ContactHelper extends HelperBase {
         (new WebDriverWait(wd, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@value='Delete']")));
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.xpath(".//tr[@name='entry']"));
         for(WebElement element : elements) {
@@ -98,5 +99,14 @@ public class ContactHelper extends HelperBase {
             contacts.add(contact);
         }
         return contacts;
+    }
+
+    public boolean exists() {
+        try {
+            wd.findElement(By.name("selected[]"));
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 }
