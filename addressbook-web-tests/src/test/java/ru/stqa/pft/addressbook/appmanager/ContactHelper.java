@@ -11,6 +11,7 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -26,9 +27,10 @@ public class ContactHelper extends HelperBase {
         type(By.name("middlename"), contactData.getMiddleName());
         type(By.name("lastname"), contactData.getLastName());
         type(By.name("nickname"), contactData.getNickName());
-        type(By.name("mobile"), contactData.getMobile());
+        type(By.name("mobile"), contactData.getMobilePhone());
+        type(By.name("home"), contactData.getHomePhone());
+        type(By.name("work"), contactData.getWorkPhone());
         type(By.name("email"), contactData.getEmail());
-
         if (creation) {
             new Select(wd.findElement(By.xpath(".//select[@name='new_group']"))).selectByVisibleText(contactData.getGroup());
         } else {
@@ -108,6 +110,7 @@ public class ContactHelper extends HelperBase {
         for(WebElement element : elements) {
             String lastName = element.findElement(By.xpath(".//td[2]")).getText();
             String firstName = element.findElement(By.xpath(".//td[3]")).getText();
+            String[] phones = element.findElement(By.xpath(".//td[6]")).getText().split("\n");
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName);
             contacts.add(contact);
@@ -122,13 +125,15 @@ public class ContactHelper extends HelperBase {
             return new Contacts(contactCache);
         }
         contactCache = new Contacts();
-        List<WebElement> elements = wd.findElements(By.xpath(".//tr[@name='entry']"));
+        List<WebElement> elements = wd.findElements(By.name("entry"));
         for(WebElement element : elements) {
-            String lastName = element.findElement(By.xpath(".//td[2]")).getText();
-            String firstName = element.findElement(By.xpath(".//td[3]")).getText();
+            List<WebElement> cells = element.findElements(By.tagName("td"));
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName);
-            contactCache.add(contact);
+            String lastName = cells.get(1).getText();
+            String firstName = cells.get(2).getText();
+            String allPhones = cells.get(5).getText();
+                contactCache.add(new ContactData().withId(id).withFirstName(firstName)
+                        .withLastName(lastName).withAllPhones(allPhones));
         }
         return new Contacts(contactCache);
     }
@@ -140,5 +145,19 @@ public class ContactHelper extends HelperBase {
         } catch (NoSuchElementException e) {
             return false;
         }
+    }
+
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModificationById(contact.getId());
+
+        String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
+        String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+        String homePhone = wd.findElement(By.name("home")).getAttribute("value");
+        String mobilePhone = wd.findElement(By.name("mobile")).getAttribute("value");
+        String workPhone = wd.findElement(By.name("work")).getAttribute("value");
+
+        return new ContactData().withId(contact.getId()).withFirstName(firstName)
+                .withLastName(lastName).withHomePhone(homePhone)
+                .withMobilePhone(mobilePhone).withWorkPhone(workPhone);
     }
 }
