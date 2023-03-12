@@ -11,7 +11,9 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static ru.stqa.pft.addressbook.tests.TestBase.*;
 
@@ -43,8 +45,8 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void initContactModification(int index) {
-        wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+    public void initContactModificationById(int id) {
+        wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
     }
 
     public void submitContactModification() {
@@ -53,6 +55,9 @@ public class ContactHelper extends HelperBase {
 
     public void selectContact(int index) {
         wd.findElements(By.name("selected[]")).get(index).click();
+    }
+    public void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
     public void deleteSelectedContact() {
@@ -66,15 +71,22 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
-    public void deleteContact(List<ContactData> before, int index) {
+    public void delete(Set<ContactData> before, int index) {
         selectContact(index);
         deleteSelectedContact();
         app.alertAccept();
         waitingDeleteButton();
     }
 
-    public void modifyContact(ContactData contact, int index) {
-        initContactModification(index);
+    public void delete(Set<ContactData> before, ContactData contact) {
+        selectContactById(contact.getId());
+        deleteSelectedContact();
+        app.alertAccept();
+        waitingDeleteButton();
+    }
+
+    public void modify(ContactData contact) {
+        initContactModificationById(contact.getId());
         fillContactForm(contact, false);
         submitContactModification();
         returnToHomePage();
@@ -90,6 +102,19 @@ public class ContactHelper extends HelperBase {
 
     public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
+        List<WebElement> elements = wd.findElements(By.xpath(".//tr[@name='entry']"));
+        for(WebElement element : elements) {
+            String lastName = element.findElement(By.xpath(".//td[2]")).getText();
+            String firstName = element.findElement(By.xpath(".//td[3]")).getText();
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName);
+            contacts.add(contact);
+        }
+        return contacts;
+    }
+
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<ContactData>();
         List<WebElement> elements = wd.findElements(By.xpath(".//tr[@name='entry']"));
         for(WebElement element : elements) {
             String lastName = element.findElement(By.xpath(".//td[2]")).getText();
