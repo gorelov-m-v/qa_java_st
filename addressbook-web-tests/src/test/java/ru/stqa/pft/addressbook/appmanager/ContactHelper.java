@@ -12,6 +12,8 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.stqa.pft.addressbook.tests.TestBase.*;
+
 public class ContactHelper extends HelperBase {
 
     public ContactHelper(WebDriver wd) {
@@ -61,6 +63,13 @@ public class ContactHelper extends HelperBase {
         fillContactForm(contact, true);
         submitContactCreation();
         returnToHomePage();
+    }
+
+    public void deleteContact(List<ContactData> before, int index) {
+        selectContact(index);
+        deleteSelectedContact();
+        app.alertAccept();
+        waitingDeleteButton();
     }
 
     public void modifyContact(ContactData contact, int index) {
