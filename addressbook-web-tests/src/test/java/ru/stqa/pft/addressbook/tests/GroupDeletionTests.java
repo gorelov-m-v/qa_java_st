@@ -1,16 +1,10 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.hamcrest.MatcherAssert;
-import org.testng.Assert;
 import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.Assert.*;
-
-import java.util.Set;
 
 public class GroupDeletionTests extends TestBase {
 
