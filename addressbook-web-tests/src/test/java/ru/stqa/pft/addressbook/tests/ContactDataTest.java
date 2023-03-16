@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
@@ -24,19 +25,23 @@ public class ContactDataTest extends TestBase {
 
     private String mergeStrings(ContactData contact, String dataType) {
 
-        if(dataType.equals("phones")) {
-            result =  Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone())
-                    .stream().filter((s) -> !s.equals(""))
-                    .map(ContactDataTest::cleaned)
-                    .collect(Collectors.joining("\n"));
-        } else if(dataType.equals("emails")) {
-            result =  Arrays.asList(contact.getEmailOne(), contact.getEmailTwo(), contact.getEmailThree())
-                    .stream().filter((s) -> !s.equals(""))
-                    .collect(Collectors.joining("\n"));
-        } else if(dataType.equals("address")) {
-            result =  Arrays.asList(contact.getAddress())
-                    .stream().filter((s) -> !s.equals(""))
-                    .collect(Collectors.joining("\n"));
+        switch (dataType) {
+            case "phones":
+                result = Stream.of(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone())
+                        .filter((s) -> !s.equals(""))
+                        .map(ContactDataTest::cleaned)
+                        .collect(Collectors.joining("\n"));
+                break;
+            case "emails":
+                result = Stream.of(contact.getEmailOne(), contact.getEmailTwo(), contact.getEmailThree())
+                        .filter((s) -> !s.equals(""))
+                        .collect(Collectors.joining("\n"));
+                break;
+            case "address":
+                result = Stream.of(contact.getAddress())
+                        .filter((s) -> !s.equals(""))
+                        .collect(Collectors.joining("\n"));
+                break;
         }
         return result;
     }
