@@ -14,6 +14,7 @@ public class ContactData {
     @Expose
     private String lastName;
     private String nickName;
+    @Expose
     private String group;
     @Expose
     private String mobilePhone;
