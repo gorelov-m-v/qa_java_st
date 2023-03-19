@@ -20,7 +20,7 @@ public class ContactDataTest extends TestBase {
 
         assertThat(contact.getAllPhones(), equalTo(mergeStrings(contactInfoEditForm, "phones")));
         assertThat(contact.getAllMails(), equalTo(mergeStrings(contactInfoEditForm, "emails")));
-        assertThat(contact.getAddress(), equalTo(mergeStrings(contactInfoEditForm, "address")));
+        assertThat(contact.getAddress(), equalTo(contactInfoEditForm.getAddress()));
     }
 
     private String mergeStrings(ContactData contact, String dataType) {
@@ -34,11 +34,6 @@ public class ContactDataTest extends TestBase {
                 break;
             case "emails":
                 result = Stream.of(contact.getEmailOne(), contact.getEmailTwo(), contact.getEmailThree())
-                        .filter((s) -> !s.equals(""))
-                        .collect(Collectors.joining("\n"));
-                break;
-            case "address":
-                result = Stream.of(contact.getAddress())
                         .filter((s) -> !s.equals(""))
                         .collect(Collectors.joining("\n"));
                 break;
