@@ -3,6 +3,8 @@ package ru.stqa.pft.addressbook.tests;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class GroupCreationTests extends TestBase {
 
@@ -63,6 +66,7 @@ public class GroupCreationTests extends TestBase {
 
     @Test
     public void testBadGroupCreation() {
+
         app.goTo().groupPage();
         Groups before = app.group().all();
         GroupData group = new GroupData().withName("test2'");
@@ -70,5 +74,6 @@ public class GroupCreationTests extends TestBase {
         assertThat(app.group().count(), equalTo(before.size()));
         Groups after = app.group().all();
         assertThat(after, equalTo(before));
+
     }
 }
