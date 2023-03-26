@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -34,6 +36,8 @@ public class ContactCreationTests extends TestBase {
 
     @Test(dataProvider = "validContactsFromJson")
     public void testContactCreationTests(ContactData contact) {
+        Groups groups = app.db().groups();
+        contact.inGroup(groups.iterator().next());
         app.goTo().homePage();
         Contacts before = app.db().contacts();
         app.contact().create(contact);
@@ -52,8 +56,7 @@ public class ContactCreationTests extends TestBase {
         ContactData contact = new ContactData().withFirstName("Mikhail").withMiddleName("Junior")
                                                .withLastName("Gorelov'").withNickName("Junior")
                                                .withMobilePhone("89037776767").withHomePhone("234234234")
-                                               .withWorkPhone("23423234234").withEmailOne("testmail@testmail.com")
-                                               .withGroup("[none]");
+                                               .withWorkPhone("23423234234").withEmailOne("testmail@testmail.com");
         app.contact().create(contact);
         assertThat(app.contact().count(), equalTo(before.size()));
         Contacts after = app.db().contacts();

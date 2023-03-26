@@ -16,7 +16,7 @@ public class ContactModificationTests extends TestBase {
                                                   .withLastName("Gorelov").withNickName("Junior").withHomePhone("1235124123")
                                                   .withWorkPhone("874654832").withMobilePhone("423476324")
                                                   .withMobilePhone("89037776767").withEmailOne("testmail@testmail.com")
-                                                  .withGroup("[none]").withEmailTwo("12312@ff.re")
+                                                  .withEmailTwo("12312@ff.re")
                                                   .withEmailThree("sadasd@dsfs.er").withAddress("asdasd"));
         }
     }
@@ -29,7 +29,7 @@ public class ContactModificationTests extends TestBase {
                                                .withLastName("Gorelov").withNickName("Junior").withHomePhone("123124")
                                                .withWorkPhone("874654832").withMobilePhone("423476324")
                                                .withMobilePhone("89037776767").withEmailOne("testmail@testmail.com")
-                                               .withGroup("[none]").withEmailTwo("12312@ff.re").withEmailThree("sadasd@dsfs.er")
+                                               .withEmailTwo("12312@ff.re").withEmailThree("sadasd@dsfs.er")
                                                .withAddress("asdasd");
         app.goTo().homePage();
         app.contact().modify(contact);
