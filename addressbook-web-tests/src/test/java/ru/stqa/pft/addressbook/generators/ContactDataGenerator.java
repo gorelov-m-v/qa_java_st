@@ -57,6 +57,7 @@ public class ContactDataGenerator {
                     .withMobilePhone(generate.randomPhone()).withWorkPhone(generate.randomPhone())
                     .withEmailOne(generate.randomEmail()).withEmailTwo(generate.randomEmail())
                     .withEmailThree(generate.randomEmail()).withGroup("[none]")
+                    .withNickName(generate.randomName()).withAddress(generate.randomString(34))
             );
         }
         return contacts;

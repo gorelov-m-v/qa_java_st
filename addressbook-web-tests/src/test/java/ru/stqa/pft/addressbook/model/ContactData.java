@@ -2,8 +2,6 @@ package ru.stqa.pft.addressbook.model;
 
 import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.Type;
-
-
 import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
@@ -20,12 +18,13 @@ public class ContactData {
     @Column(name = "firstname")
     private String firstName;
     @Expose
-    @Transient
+    @Column(name = "middlename")
     private String middleName;
     @Expose
     @Column(name = "lastname")
     private String lastName;
-    @Transient
+    @Expose
+    @Column(name = "nickname")
     private String nickName;
     @Expose
     @Transient
@@ -45,17 +44,22 @@ public class ContactData {
     @Transient
     private String allPhones;
     @Expose
-    @Transient
+    @Column(name = "email")
+    @Type(type = "text")
     private String emailOne;
     @Expose
-    @Transient
+    @Column(name = "email2")
+    @Type(type = "text")
     private String emailTwo;
     @Expose
-    @Transient
+    @Column(name = "email3")
+    @Type(type = "text")
     private String emailThree;
     @Transient
     private String allMails;
-    @Transient
+    @Expose
+    @Column(name = "address")
+    @Type(type = "text")
     private String address;
     @Column(name = "photo")
     @Type(type = "text")
@@ -193,8 +197,18 @@ public class ContactData {
     @Override
     public String toString() {
         return "ContactData{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", workPhone='" + workPhone + '\'' +
+                ", emailOne='" + emailOne + '\'' +
+                ", emailTwo='" + emailTwo + '\'' +
+                ", emailThree='" + emailThree + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 
@@ -207,14 +221,32 @@ public class ContactData {
 
         if (id != that.id) return false;
         if (!Objects.equals(firstName, that.firstName)) return false;
-        return Objects.equals(lastName, that.lastName);
+        if (!Objects.equals(middleName, that.middleName)) return false;
+        if (!Objects.equals(lastName, that.lastName)) return false;
+        if (!Objects.equals(nickName, that.nickName)) return false;
+        if (!Objects.equals(mobilePhone, that.mobilePhone)) return false;
+        if (!Objects.equals(homePhone, that.homePhone)) return false;
+        if (!Objects.equals(workPhone, that.workPhone)) return false;
+        if (!Objects.equals(emailOne, that.emailOne)) return false;
+        if (!Objects.equals(emailTwo, that.emailTwo)) return false;
+        if (!Objects.equals(emailThree, that.emailThree)) return false;
+        return Objects.equals(address, that.address);
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (nickName != null ? nickName.hashCode() : 0);
+        result = 31 * result + (mobilePhone != null ? mobilePhone.hashCode() : 0);
+        result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
+        result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
+        result = 31 * result + (emailOne != null ? emailOne.hashCode() : 0);
+        result = 31 * result + (emailTwo != null ? emailTwo.hashCode() : 0);
+        result = 31 * result + (emailThree != null ? emailThree.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
     }
 }
