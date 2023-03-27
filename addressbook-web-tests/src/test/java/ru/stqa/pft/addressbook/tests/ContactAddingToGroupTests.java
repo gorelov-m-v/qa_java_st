@@ -45,15 +45,10 @@ public class ContactAddingToGroupTests extends TestBase {
 
         app.contact().addToGroup(selectedGroup, selectedContact);
 
-//         Groups linkedGroups = app.db().groups(
-//                String.format("from GroupData where id = '%s'", selectedGroup.getId()));  // <- Алексей, скажите пожалуйста, этот блок выглядит как костыль?
-//         GroupData linkedGroup = linkedGroups.iterator().next();                          // Я получаю список групп, заведомо зная что он будет из одного элемента.
-//                                                                                          // Потом беру из него один элемент.
+        ContactData linkedContact = app.db().contact(
+                String.format("from ContactData where deprecated = '0000-00-00' and id = '%s'", selectedContact.getId()));
+        Groups contactGroups = linkedContact.getGroups();
 
-        GroupData linkedGroup = app.db().group(
-                String.format("from GroupData where id = '%s'", selectedGroup.getId()));  // <- Алексей, скажите пожалуйста, этот блок выглядит как костыль?
-
-
-        assertThat(selectedGroup.getId(), equalTo(linkedGroup.getId()));
+        assertThat(selectedGroup.getId(), equalTo(contactGroups.stream().findFirst().get().getId()));
     }
 }

@@ -51,7 +51,7 @@ public class DbHelper {
     public GroupData group(String script) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        GroupData result = (GroupData) session.createQuery(script).list();
+        GroupData result = (GroupData) session.createQuery(script).uniqueResult();
 
         session.getTransaction().commit();
         session.close();
@@ -83,5 +83,16 @@ public class DbHelper {
         session.close();
 
         return new Contacts(result);
+    }
+
+    public ContactData contact(String script) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        ContactData result = (ContactData) session.createQuery(script).uniqueResult();
+
+        session.getTransaction().commit();
+        session.close();
+
+        return result;
     }
 }
