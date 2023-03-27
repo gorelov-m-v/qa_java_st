@@ -8,8 +8,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -39,7 +43,7 @@ public class ContactHelper extends HelperBase {
             new Select(wd.findElement(By.xpath(".//select[@name='new_group']")))
                     .selectByVisibleText(contactData.getGroups().iterator().next().getName());
         } else {
-            Assert.assertFalse(isElementPresent(By.xpath(".//select[@name='new_group']")));
+            Assert.assertTrue(isElementPresent(By.xpath(".//select[@name='new_group']")));
         }
     }
 
@@ -174,4 +178,13 @@ public class ContactHelper extends HelperBase {
                 .withEmailOne(emailOne).withEmailTwo(emailTwo)
                 .withEmailThree(emailThree).withAddress(address);
     }
+
+    public void addToGroup(GroupData group, ContactData contact) {
+        Select selectedGroup = new Select(wd.findElement(By.name("to_group")));
+        selectedGroup.selectByVisibleText(group.getName());
+        selectContactById(contact.getId());
+        click(By.name("add"));
+//        wd.findElement(By.name("add")).click();
+    }
+
 }

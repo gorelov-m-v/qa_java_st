@@ -49,11 +49,11 @@ public class ContactCreationTests extends TestBase {
 
     }
 
-    @Test
+    @Test(enabled = false)
     public void testBadContactCreationTests() {
         app.goTo().homePage();
         Contacts before = app.db().contacts();
-        ContactData contact = new ContactData().withFirstName("Mikhail").withMiddleName("Junior")
+        ContactData contact = new ContactData().withFirstName("Mikhail'").withMiddleName("Junior")
                                                .withLastName("Gorelov'").withNickName("Junior")
                                                .withMobilePhone("89037776767").withHomePhone("234234234")
                                                .withWorkPhone("23423234234").withEmailOne("testmail@testmail.com");

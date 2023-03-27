@@ -35,11 +35,47 @@ public class DbHelper {
 
         return new Groups(result);
     }
+    public Groups groups(String script) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<GroupData> result = session.createQuery(script).list();
+        for (GroupData group : result) {
+            System.out.println(group);
+        }
+        session.getTransaction().commit();
+        session.close();
+
+        return new Groups(result);
+    }
+
+    public GroupData group(String script) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        GroupData result = (GroupData) session.createQuery(script).list();
+
+        session.getTransaction().commit();
+        session.close();
+
+        return result;
+    }
 
     public Contacts contacts() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<ContactData> result = session.createQuery( "from ContactData where deprecated = '0000-00-00'" ).list();
+        for (ContactData contact : result) {
+            System.out.println(contact);
+        }
+        session.getTransaction().commit();
+        session.close();
+
+        return new Contacts(result);
+    }
+
+    public Contacts contacts(String script) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<ContactData> result = session.createQuery(script).list();
         for (ContactData contact : result) {
             System.out.println(contact);
         }
