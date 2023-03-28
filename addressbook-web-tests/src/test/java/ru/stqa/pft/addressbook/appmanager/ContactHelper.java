@@ -180,11 +180,19 @@ public class ContactHelper extends HelperBase {
     }
 
     public void addToGroup(GroupData group, ContactData contact) {
+        app.goTo().homePage();
         Select selectedGroup = new Select(wd.findElement(By.name("to_group")));
         selectedGroup.selectByVisibleText(group.getName());
         selectContactById(contact.getId());
         click(By.name("add"));
-//        wd.findElement(By.name("add")).click();
+    }
+
+    public void deletedFromGroup(GroupData group, ContactData contact) {
+        app.goTo().homePage();
+        Select selectedGroup = new Select(wd.findElement(By.name("group")));
+        selectedGroup.selectByVisibleText(group.getName());
+        selectContactById(contact.getId());
+        click(By.name("remove"));
     }
 
 }

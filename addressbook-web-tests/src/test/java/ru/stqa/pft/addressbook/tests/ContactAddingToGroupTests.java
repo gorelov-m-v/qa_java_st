@@ -1,7 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.generators.StringGenerator;
@@ -10,8 +8,11 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+
+import static org.testng.AssertJUnit.assertTrue;
 
 public class ContactAddingToGroupTests extends TestBase {
 
@@ -49,6 +50,6 @@ public class ContactAddingToGroupTests extends TestBase {
                 String.format("from ContactData where deprecated = '0000-00-00' and id = '%s'", selectedContact.getId()));
         Groups contactGroups = linkedContact.getGroups();
 
-        assertThat(selectedGroup.getId(), equalTo(contactGroups.stream().findFirst().get().getId()));
+        assertTrue(contactGroups.contains(selectedGroup));
     }
 }
