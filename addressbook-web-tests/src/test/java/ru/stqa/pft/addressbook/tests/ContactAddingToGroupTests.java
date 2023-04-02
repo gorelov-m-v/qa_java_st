@@ -9,18 +9,23 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 import static org.testng.AssertJUnit.assertTrue;
 
 public class ContactAddingToGroupTests extends TestBase {
 
     StringGenerator generate = new StringGenerator();
+    Contacts contactList;
+    Groups groupList;
 
     @BeforeMethod
     public void ensurePreconditions() {
-        if (app.db().contacts().size() == 0) {
+        // Запрашиваем списки групп и контактов.
+        contactList = app.db().contacts();
+        groupList = app.db().groups();
+
+        // Проверяем полученные списки групп и контактов, если они пустые - создаем и обновляем списки.
+        if (contactList.size() == 0) {
             app.goTo().homePage();
             app.contact().create(new ContactData().withFirstName(generate.randomName()).withMiddleName(generate.randomName())
                                                   .withLastName(generate.randomName()).withNickName(generate.randomName())
@@ -28,20 +33,38 @@ public class ContactAddingToGroupTests extends TestBase {
                                                   .withWorkPhone(generate.randomPhone()).withEmailOne(generate.randomEmail())
                                                   .withEmailTwo(generate.randomEmail()).withEmailThree(generate.randomEmail())
                                                   .withAddress(generate.randomString(20)));
+            contactList = app.db().contacts();
         }
-        if(app.db().groups().size() == 0) {
+        if(groupList.size() == 0) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName(generate.randomName())
                                               .withHeader(generate.randomName())
                                               .withFooter(generate.randomName()));
+            groupList = app.db().groups();
+        }
+        // Если список контактов не пустой, ищем в нем контакты, которые присутствует во всех существующих группах и удаляем их из списка.
+        for (ContactData contact : contactList) {
+            if(contact.getGroups().equals(app.db().groups())) {
+                contactList.remove(contact);
+            }
+            // Если список после преобразования оказался пустым - создаем новый контакт и обновляем список.
+            if(contactList.isEmpty()) {
+                app.goTo().homePage();
+                app.contact().create(new ContactData().withFirstName(generate.randomName()).withMiddleName(generate.randomName())
+                                                      .withLastName(generate.randomName()).withNickName(generate.randomName())
+                                                      .withMobilePhone(generate.randomPhone()).withHomePhone(generate.randomPhone())
+                                                      .withWorkPhone(generate.randomPhone()).withEmailOne(generate.randomEmail())
+                                                      .withEmailTwo(generate.randomEmail()).withEmailThree(generate.randomEmail())
+                                                      .withAddress(generate.randomString(20)));
+                contactList = app.db().contacts();
+            }
         }
     }
 
     @Test
     public void addContactToGroup() {
-        Groups groupList = app.db().groups();
+        // В тесте работаем с преобразованным списком.
         GroupData selectedGroup = groupList.iterator().next();
-        Contacts contactList = app.db().contacts();
         ContactData selectedContact = contactList.iterator().next();
 
         app.contact().addToGroup(selectedGroup, selectedContact);

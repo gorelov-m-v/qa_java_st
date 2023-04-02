@@ -7,6 +7,7 @@ import ru.stqa.pft.addressbook.model.*;
 
 import java.util.List;
 
+import static org.testng.AssertJUnit.assertNull;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class ContactDeletionGroupTests extends TestBase {
@@ -53,6 +54,6 @@ public class ContactDeletionGroupTests extends TestBase {
                 "from AddressInGroups where deprecated = '0000-00-00' and id = %s and group_id = %s",
                 selectedContact.getId(), selectedGroup.getId()));
 
-        assertTrue(addressInGroup == null);
+        assertNull(addressInGroup);
     }
 }
