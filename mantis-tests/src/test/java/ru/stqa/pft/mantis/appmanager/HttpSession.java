@@ -33,14 +33,14 @@ public class HttpSession {
         post.setEntity(new UrlEncodedFormEntity(params));
         CloseableHttpResponse response = httpClient.execute(post);
         String body = geTextFrom(response);
-        return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
+        return body.contains(String.format("<span id=\"logged-in-user\">%s</span>", username));
     }
 
     public boolean isLoggedInAS(String username) throws IOException {
         HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php");
         CloseableHttpResponse response = httpClient.execute(get);
         String body = geTextFrom(response);
-        return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
+        return body.contains(String.format("<span id=\"logged-in-user\">%s</span>", username));
     }
 
     private String geTextFrom(CloseableHttpResponse response) throws IOException {
