@@ -38,13 +38,6 @@ public class ContactHelper extends HelperBase {
         type(By.name("email3"), contactData.getEmailThree());
         type(By.name("address"), contactData.getAddress());
 //        attach(By.name("photo"), contactData.getPhoto());
-        if (contactData.getGroups().size() > 0) {
-            Assert.assertTrue(contactData.getGroups().size() == 1);
-            new Select(wd.findElement(By.xpath(".//select[@name='new_group']")))
-                    .selectByVisibleText(contactData.getGroups().iterator().next().getName());
-        } else {
-            Assert.assertTrue(isElementPresent(By.xpath(".//select[@name='new_group']")));
-        }
     }
 
     public void initContactCreation() {

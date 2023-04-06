@@ -7,9 +7,7 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
-
-import java.util.List;
-
+import java.util.Iterator;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class ContactAddingToGroupTests extends TestBase {
@@ -42,11 +40,15 @@ public class ContactAddingToGroupTests extends TestBase {
                                               .withFooter(generate.randomName()));
             groupList = app.db().groups();
         }
+
         // Если список контактов не пустой, ищем в нем контакты, которые присутствует во всех существующих группах и удаляем их из списка.
-        for (ContactData contact : contactList) {
-            if(contact.getGroups().equals(app.db().groups())) {
-                contactList.remove(contact);
+        Iterator<ContactData> i = contactList.iterator();
+        while(i.hasNext()) {
+            if (i.next().getGroups().equals(groupList)) {
+                i.remove();
             }
+        }
+
             // Если список после преобразования оказался пустым - создаем новый контакт и обновляем список.
             if(contactList.isEmpty()) {
                 app.goTo().homePage();
@@ -59,7 +61,6 @@ public class ContactAddingToGroupTests extends TestBase {
                 contactList = app.db().contacts();
             }
         }
-    }
 
     @Test
     public void addContactToGroup() {

@@ -30,10 +30,10 @@ public class TestBase {
         app.init();
     }
 
-//    @AfterSuite(alwaysRun=true)
-//    public void tearDown() throws Exception {
-//        app.stop();
-//    }
+    @AfterSuite(alwaysRun=true)
+    public void tearDown() throws Exception {
+        app.stop();
+    }
 
     @BeforeMethod
     public void logTestStart(Method m, Object[] p) {
