@@ -37,9 +37,10 @@ public class TestBase {
     public boolean isIssueOpen(int issueId) throws MalformedURLException, ServiceException, RemoteException {
         MantisConnectPortType mc = getMantisConnect();
 
-        IssueData issueData = mc.mc_issue_get("administrator", "root", BigInteger.valueOf(issueId));
+        IssueData issueData = mc.mc_issue_get(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"), BigInteger.valueOf(issueId));
 
-        return issueData.getStatus().getName().equals("решена") ;
+        // Считаем открытым, если статус отличается от "resolved"
+        return !issueData.getStatus().getName().equals("resolved") ;
     }
 
     public void skipIfNotFixed(int issueId) throws MalformedURLException, ServiceException, RemoteException {

@@ -12,7 +12,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLOutput;
 import java.util.Set;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.*;
 import static ru.stqa.pft.mantis.appmanager.SoapHelper.getMantisConnect;
 
 public class SoapTests extends TestBase {
@@ -37,5 +37,19 @@ public class SoapTests extends TestBase {
         Issue createdIssue = app.soap().addIssue(issue);
 
         assertEquals(issue.getSummary(), createdIssue.getSummary());
+    }
+
+    @Test
+    public void smokeTest() throws MalformedURLException, ServiceException, RemoteException {
+
+        // Допустим, у нас уже есть пользователь и проект с одним баг-репортом(с каким-нибудь статусом):
+        Issue issue = app.soap().getIssues(app.soap().getProjects().iterator().next().getId()).iterator().next();
+        int issueId = issue.getId();
+
+        // Проверка статуса баг-репорта:
+        skipIfNotFixed(issueId);
+
+        // Какой-нибудь тест, если не пропускаем:
+        assertTrue(app.soap().issueExists(issueId));
     }
 }
