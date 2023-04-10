@@ -1,11 +1,21 @@
 package ru.stqa.pft.mantis.tests;
 
+import biz.futureware.mantis.rpc.soap.client.IssueData;
+import biz.futureware.mantis.rpc.soap.client.MantisConnectPortType;
 import org.openqa.selenium.remote.BrowserType;
+import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Test;
 import ru.stqa.pft.mantis.appmanager.ApplicationManager;
 
+import javax.xml.rpc.ServiceException;
 import java.io.File;
+import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
+
+import static ru.stqa.pft.mantis.appmanager.SoapHelper.getMantisConnect;
 
 public class TestBase {
 
@@ -21,6 +31,21 @@ public class TestBase {
     @AfterSuite(alwaysRun = true)
     public void tearDown() throws Exception {
         app.ftp().restore("config_inc.php.bak", "config_inc.php");
-//        app.stop();
+        app.stop();
     }
+
+    public boolean isIssueOpen(int issueId) throws MalformedURLException, ServiceException, RemoteException {
+        MantisConnectPortType mc = getMantisConnect();
+
+        IssueData issueData = mc.mc_issue_get("administrator", "root", BigInteger.valueOf(issueId));
+
+        return issueData.getStatus().getName().equals("решена") ;
+    }
+
+    public void skipIfNotFixed(int issueId) throws MalformedURLException, ServiceException, RemoteException {
+        if (isIssueOpen(issueId)) {
+            throw new SkipException("Ignored because of issue " + issueId);
+        }
+    }
+
 }

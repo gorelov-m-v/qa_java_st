@@ -1,14 +1,19 @@
 package ru.stqa.pft.mantis.tests;
 
+import biz.futureware.mantis.rpc.soap.client.IssueData;
+import biz.futureware.mantis.rpc.soap.client.MantisConnectPortType;
 import org.testng.annotations.Test;
 import ru.stqa.pft.mantis.model.Issue;
 import ru.stqa.pft.mantis.model.Project;
 import javax.xml.rpc.ServiceException;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.sql.SQLOutput;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
+import static ru.stqa.pft.mantis.appmanager.SoapHelper.getMantisConnect;
 
 public class SoapTests extends TestBase {
 
@@ -33,5 +38,4 @@ public class SoapTests extends TestBase {
 
         assertEquals(issue.getSummary(), createdIssue.getSummary());
     }
-
 }
