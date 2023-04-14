@@ -15,6 +15,6 @@ dependencies {
     implementation 'remote-repl:remote-repl:0.0.1-SNAPSHOT'
 }
 
-test{
+test {
     useTestNG()
 }
