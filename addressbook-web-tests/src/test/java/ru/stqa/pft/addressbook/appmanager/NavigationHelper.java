@@ -24,4 +24,8 @@ public class NavigationHelper extends HelperBase {
         }
         click(By.linkText("home"));
     }
+
+    public void mainPage() {
+        click(By.xpath("//img[@alt='Addressbook']"));
+    }
 }

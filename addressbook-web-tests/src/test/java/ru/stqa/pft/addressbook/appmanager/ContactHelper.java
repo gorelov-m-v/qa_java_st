@@ -186,6 +186,7 @@ public class ContactHelper extends HelperBase {
         selectedGroup.selectByVisibleText(group.getName());
         selectContactById(contact.getId());
         click(By.name("remove"));
+        app.goTo().mainPage();
     }
 
 }
