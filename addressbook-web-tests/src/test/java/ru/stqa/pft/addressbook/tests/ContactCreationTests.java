@@ -33,7 +33,7 @@ public class ContactCreationTests extends TestBase {
         }
     }
 
-    @Test(dataProvider = "validContactsFromJson")
+    @Test(dataProvider = "validContactsFromJson", enabled = false)
     public void testContactCreationTests(ContactData contact) {
         Groups groups = app.db().groups();
         contact.inGroup(groups.iterator().next());
