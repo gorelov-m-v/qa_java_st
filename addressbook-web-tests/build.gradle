@@ -32,7 +32,7 @@ task testGroups(type: Test) {
         systemProperty 'browser', "${browser}"
     }
     if (project.hasProperty('target')) {
-        systemProperty 'browser', "${target}"
+        systemProperty 'target', "${target}"
     }
     if (project.hasProperty('verifyUI')) {
         systemProperty 'verifyUI', "${verifyUI}"
@@ -47,7 +47,7 @@ task testContacts(type: Test) {
         systemProperty 'browser', "${browser}"
     }
     if (project.hasProperty('target')) {
-        systemProperty 'browser', "${target}"
+        systemProperty 'target', "${target}"
     }
     if (project.hasProperty('verifyUI')) {
         systemProperty 'verifyUI', "${verifyUI}"
