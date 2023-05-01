@@ -10,6 +10,8 @@ dependencies {
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: '3.141.59'
     implementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+
+
 }
 
 task testGroups(type: Test) {
