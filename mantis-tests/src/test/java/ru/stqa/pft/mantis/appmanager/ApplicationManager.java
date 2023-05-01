@@ -55,4 +55,8 @@ public class ApplicationManager {
         }
         return wd;
     }
+
+    public HttpSession newSession() {
+        return new HttpSession(this);
+    }
 }
